@@ -9,7 +9,7 @@ function Home() {
   const handleSearch = () => {
     if (query.trim() === '') return;
 
-    const API_KEY = 'AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA'; // Replace with actual key
+    const API_KEY = 'AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA';
     const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`;
 
     fetch(url)
