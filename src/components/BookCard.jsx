@@ -1,54 +1,54 @@
-// src/components/BookCard.jsx
 import React from "react";
 import { useBookContext } from "../context/BookContext";
+import { Link } from "react-router-dom";
+import "./BookCard.css";
 
-function BookCard({ book }) {
-  const { addToReadingList, readingList, removeFromReadingList } = useBookContext();
+function BookCard({ book, isRemovable = false }) {
+  const { addToReadingList, removeFromReadingList, readingList } = useBookContext();
+
   const isInReadingList = readingList.some((item) => item.id === book.id);
 
-  const {
-    title,
-    authors,
-    imageLinks,
-    previewLink,
-    description,
-  } = book.volumeInfo;
+  const handleAdd = () => {
+    addToReadingList(book);
+  };
+
+  const handleRemove = () => {
+    removeFromReadingList(book.id);
+  };
+
+  const { volumeInfo } = book;
+  const { title, authors, imageLinks, description } = volumeInfo;
 
   return (
-    <div
-      style={{
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        padding: "1rem",
-        marginBottom: "1rem",
-        width: "250px",
-      }}
-    >
-      {imageLinks?.thumbnail && (
-        <img
-          src={imageLinks.thumbnail}
-          alt={title}
-          style={{ width: "100%", height: "auto", marginBottom: "0.5rem" }}
-        />
-      )}
-      <h3>{title}</h3>
-      {authors && <p>By: {authors.join(", ")}</p>}
+    <div className="book-card">
+      <img
+        src={imageLinks?.thumbnail || "https://via.placeholder.com/128x192?text=No+Image"}
+        alt={title}
+        className="book-thumbnail"
+      />
+      <div className="book-info">
+        <h3 className="book-title">{title}</h3>
+        <p className="book-author">{authors?.join(", ") || "Unknown Author"}</p>
 
-      <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-        {!isInReadingList ? (
-          <button onClick={() => addToReadingList(book)}>Add To My List</button>
-        ) : (
-          <button onClick={() => removeFromReadingList(book.id)}>Remove</button>
-        )}
+        <div className="book-actions">
+          <Link to={`/book/${book.id}`}>
+            <button className="view-details-btn">View Details</button>
+          </Link>
 
-        {previewLink && (
-          <button
-            onClick={() => window.open(previewLink, "_blank")}
-            style={{ backgroundColor: "#007bff", color: "#fff", border: "none", padding: "6px 10px", borderRadius: "4px" }}
-          >
-            View Details
-          </button>
-        )}
+          {isRemovable ? (
+            <button className="remove-btn" onClick={handleRemove}>
+              Remove
+            </button>
+          ) : isInReadingList ? (
+            <button className="disabled-btn" disabled>
+              Added
+            </button>
+          ) : (
+            <button className="add-btn" onClick={handleAdd}>
+              Add to List
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
