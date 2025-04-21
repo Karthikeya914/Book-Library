@@ -1,4 +1,3 @@
-// src/pages/MyList.jsx
 import React from "react";
 import { useBookContext } from "../context/BookContext"; // Access shared book data from context
 import BookCard from "../components/BookCard"; // Component to display each book info
