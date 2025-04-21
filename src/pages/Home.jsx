@@ -1,48 +1,49 @@
-import React, { useState } from 'react';
-import { useBookContext } from '../context/BookContext.jsx';
-import BookCard from '../components/BookCard.jsx';
+import React, { useEffect, useState } from "react";
+import { useBookContext } from "../context/BookContext";
+import BookCard from "../components/BookCard";
+import SearchBar from "../components/SearchBar";
+import "./Home.css";
 
 function Home() {
-  const [query, setQuery] = useState('');
   const { books, setBooks } = useBookContext();
+  const [suggestions, setSuggestions] = useState([]);
+  Api_Key = 'AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA'
+  const fetchBooks = async (query = "") => {
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${Api_Key}`
+      );
+      const data = await response.json();
+      const items = data.items || [];
+      setBooks(items);
 
-  const handleSearch = () => {
-    if (query.trim() === '') return;
+      // Update suggestions (titles only)
+      const titles = items.map((item) => item.volumeInfo.title);
+      setSuggestions(titles);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
 
-    const API_KEY = 'AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA';
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_KEY}`;
+  useEffect(() => {
+    fetchBooks();
+  }, []);
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        if (data.items) {
-          setBooks(data.items);
-        } else {
-          setBooks([]);
-        }
-      })
-      .catch(err => {
-        console.error("Error fetching books:", err);
-      });
+  const handleSearch = (query) => {
+    fetchBooks(query);
   };
 
   return (
-    <div className="page">
-      <h2>Search Books</h2>
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Type book title..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
+    <div className="home">
+      <h1 className="page-title">Search Books</h1>
+      <SearchBar onSearch={handleSearch} suggestions={suggestions} />
 
       <div className="book-list">
-        {books.map((item, index) => (
-          <BookCard key={index} book={item} />
-        ))}
+        {books && books.length > 0 ? (
+          books.map((book) => <BookCard key={book.id} book={book} />)
+        ) : (
+          <p>No books found.</p>
+        )}
       </div>
     </div>
   );
