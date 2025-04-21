@@ -1,3 +1,5 @@
+// import all components here
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { BookProvider } from "./context/BookContext";
@@ -7,6 +9,7 @@ import MyList from "./pages/ReadingList";
 import BookDetails from "./pages/BookDetails";
 import "./App.css";
 
+// App Component
 function App() {
   return (
     <BookProvider>
@@ -22,4 +25,6 @@ function App() {
   );
 }
 
+
+// Exporting App Component 
 export default App;
