@@ -1,17 +1,35 @@
-// src/components/Navbar.jsx
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
+  const location = useLocation();
+  const isBookDetails = location.pathname.startsWith("/book/");
+
   return (
-    <nav className="navbar">
-      <div className="logo">📚 BookHunt</div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/mylist">My Reading List</Link></li>
-      </ul>
-    </nav>
+    <div className="navbar">
+      <Link to="/" className="navbar-logo">📚 BookHunt</Link>
+      <div className="navbar-links">
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to="/mylist"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          My List
+        </NavLink>
+        <Link
+          to="/book/1" // Keep any sample route
+          className={isBookDetails ? "active" : ""}
+        >
+          Book Details
+        </Link>
+      </div>
+    </div>
   );
 }
 
