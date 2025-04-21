@@ -6,20 +6,21 @@ import "./BookCard.css";
 function BookCard({ book, isRemovable = false }) {
   const { addToReadingList, removeFromReadingList, readingList } = useBookContext();
 
-  // const isInReadingList = readingList.some((item) => item.id === book.id);
-let isInReadingList = false;
-   for (let i = 0; i < readingList.length; i++) {
-      if (readingList[i].id === book.id) {
+  // Check if the current book is already in the reading list
+  let isInReadingList = false;
+  for (let i = 0; i < readingList.length; i++) {
+    if (readingList[i].id === book.id) {
       isInReadingList = true;
       break;
     }
-}
+  }
+
   const handleAdd = () => {
-    addToReadingList(book);
+    addToReadingList(book); // Add the book to the list
   };
 
   const handleRemove = () => {
-    removeFromReadingList(book.id);
+    removeFromReadingList(book.id); // Remove the book by its ID
   };
 
   const { volumeInfo } = book;
@@ -28,6 +29,7 @@ let isInReadingList = false;
   return (
     <div className="book-card">
       <img
+        // A Default is image shown if book thumbnail is not available
         src={imageLinks?.thumbnail || "https://via.placeholder.com/128x192?text=No+Image"}
         alt={title}
         className="book-thumbnail"
@@ -42,10 +44,12 @@ let isInReadingList = false;
           </Link>
 
           {isRemovable ? (
+            // If the card is in reading list page, allow removing
             <button className="remove-btn" onClick={handleRemove}>
               Remove
             </button>
           ) : isInReadingList ? (
+            // Disable add button if book is already in list
             <button className="disabled-btn" disabled>
               Added
             </button>
