@@ -11,7 +11,7 @@ function Home() {
   const fetchBooks = async (query = "") => {
     try {
       const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key={import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
       );
       const data = await response.json();
       const items = data.items || [];
