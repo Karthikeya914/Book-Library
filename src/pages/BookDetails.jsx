@@ -1,20 +1,19 @@
-// src/pages/BookDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./BookDetails.css";
 
 const BookDetails = () => {
-  const { bookId } = useParams();
+  const { bookId } = useParams(); // Get book ID from URL
   const [book, setBook] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // loading state
-  const [notFound, setNotFound] = useState(false); // book not found state
+  const [isLoading, setIsLoading] = useState(true); 
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     const fetchBook = async () => {
       setIsLoading(true);
       setNotFound(false);
 
-      // Try from localStorage
+      // First check local storage
       const savedBooks = JSON.parse(localStorage.getItem("readingList")) || [];
       const localBook = savedBooks.find((b) => b.id === bookId);
 
@@ -24,17 +23,17 @@ const BookDetails = () => {
         return;
       }
 
-      // Fallback: Fetch from Google Books API
+      // If no data was found in local storage, fetch from API
       try {
         const response = await fetch(
-          `https://www.googleapis.com/books/v1/volumes/${bookId}?key=AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA`
+          `https://www.googleapis.com/books/v1/volumes/${bookId}?key={import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
         );
         const data = await response.json();
 
         if (!data || data.error) {
-          setNotFound(true);
+          setNotFound(true); // If no data was found
         } else {
-          setBook(data);
+          setBook(data); // Set data from API
         }
       } catch (error) {
         console.error("Error fetching book details:", error);
@@ -45,7 +44,7 @@ const BookDetails = () => {
     };
 
     fetchBook();
-  }, [bookId]);
+  }, [bookId]); // Refetch if bookId changes
 
   if (isLoading) return <p className="loading">Loading book details...</p>;
 
@@ -53,7 +52,7 @@ const BookDetails = () => {
     return (
       <div className="no-book">
         <h2>Book Not Found</h2>
-        <p>We couldn't find the book you're looking for.</p>
+        <p>We couldn't find the book you are looking for.</p>
         <Link to="/" className="back-home-link">← Back to Home</Link>
       </div>
     );
