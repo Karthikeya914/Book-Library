@@ -26,7 +26,7 @@ const BookDetails = () => {
       // If no data was found in local storage, fetch from API
       try {
         const response = await fetch(
-          `https://www.googleapis.com/books/v1/volumes/${bookId}?key={import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
+          `https://www.googleapis.com/books/v1/volumes/${bookId}?key=AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA`
         );
         const data = await response.json();
 
