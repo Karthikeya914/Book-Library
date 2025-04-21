@@ -1,4 +1,3 @@
-// src/components/SearchBar.jsx
 import React, { useState } from "react";
 import "./SearchBar.css";
 
@@ -6,13 +5,16 @@ function SearchBar({ onSearch, suggestions }) {
   const [query, setQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  // function for handling input user gives
   const handleInput = (e) => {
     const value = e.target.value;
     setQuery(value);
-    onSearch(value); // live search
+    onSearch(value); // triggers live search
     setShowSuggestions(true);
   };
 
+
+  // function for handling submissions
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch(query);
@@ -37,6 +39,7 @@ function SearchBar({ onSearch, suggestions }) {
         <button type="submit">Search</button>
       </form>
 
+      {/* Show suggestion list only when there's input and suggestions available */}
       {showSuggestions && suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((title, index) => (
