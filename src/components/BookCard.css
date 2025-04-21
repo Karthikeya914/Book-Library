@@ -1,59 +1,60 @@
-.card {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    transition: box-shadow 0.3s;
-    height: 100%;
-  }
-  
-  .card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .thumbnail {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    object-fit: cover;
-    margin-bottom: 1rem;
-  }
-  
-  .card h3 {
-    font-size: 1.1rem;
-    margin: 0.5rem 0;
-    color: #333;
-    text-align: center;
-  }
-  
-  .card p {
-    font-size: 0.95rem;
-    color: #555;
-    text-align: center;
-  }
-  
-  .actions {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: auto;
-  }
-  
-  button {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    transition: background-color 0.2s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+.book-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  width: 180px;
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.book-thumbnail {
+  width: 128px;
+  height: 192px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.book-info {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.book-info h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.book-info p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.book-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.add-btn, .remove-btn, .view-details-btn {
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-btn:hover, .remove-btn:hover, .view-details-btn:hover {
+  background-color: #1565c0;
+}
+
+.add-btn:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+}
