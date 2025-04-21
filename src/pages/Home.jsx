@@ -7,11 +7,11 @@ import "./Home.css";
 function Home() {
   const { books, setBooks } = useBookContext();
   const [suggestions, setSuggestions] = useState([]);
-  Api_Key = 'AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA'
+
   const fetchBooks = async (query = "") => {
     try {
       const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${Api_Key}`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyD9JUUiPiAJRz6oGLzSRqssb-1yGfJRTDA`
       );
       const data = await response.json();
       const items = data.items || [];
@@ -42,7 +42,7 @@ function Home() {
         {books && books.length > 0 ? (
           books.map((book) => <BookCard key={book.id} book={book} />)
         ) : (
-          <p>No books found.</p>
+          <p>Searched Books Will be Available Here</p>
         )}
       </div>
     </div>
