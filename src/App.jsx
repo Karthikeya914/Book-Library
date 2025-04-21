@@ -1,25 +1,25 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header.jsx';
-import Home from './pages/Home.jsx';
-import BookDetails from './pages/BookDetails.jsx';
-import MyList from './pages/MyList.jsx';
-import AddReview from './pages/AddReview.jsx';
-import { BookProvider } from './context/BookContext.jsx';
+// src/App.jsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BookProvider } from "./context/BookContext";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import MyList from "./pages/ReadingList";
+import BookDetails from "./pages/BookDetails";
+import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
-      <BookProvider>
-        <Header />
+    <BookProvider>
+      <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/book/:id" element={<BookDetails />} />
-          <Route path="/my-list" element={<MyList />} />
-          <Route path="/add-review" element={<AddReview />} />
+          <Route path="/mylist" element={<MyList />} />
+          <Route path="/book/:bookId" element={<BookDetails />} /> {/* This is for BookDetails */}
         </Routes>
-      </BookProvider>
-    </BrowserRouter>
+      </Router>
+    </BookProvider>
   );
 }
 
