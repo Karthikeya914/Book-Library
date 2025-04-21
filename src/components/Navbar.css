@@ -1,41 +1,91 @@
+/* Navbar Container */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: linear-gradient(90deg, #1e3c72, #2a5298);
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #4e54c8, #8f94fb); /* Gradient background */
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  position: sticky; /* Keep navbar fixed at top */
+  top: 0;
+  z-index: 1000;
+}
+
+/* Logo Style */
+.navbar-logo {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none; /* Remove underline */
+  transition: color 0.2s ease;
+}
+
+/* Hover effect on the logo */
+.navbar-logo:hover {
+  color: #ffeb3b;
+}
+
+/* Links Container */
+.navbar-links {
+  display: flex;
+  gap: 1.5rem; /* Space between links */
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none; /* Remove underline */
+  font-weight: 500;
+  position: relative;
+  padding: 5px 0;
+  transition: transform 0.2s ease, color 0.2s ease; /* Smooth transition */
+}
+
+/* Hover effect on links */
+.navbar-links a:hover {
+  transform: scale(1.1);
+  color: #ffeb3b; /* Yellow color on hover */
+}
+
+/* Active link style */
+.navbar-links a.active {
+  color: #ffeb3b; /* Active color */
+  font-weight: bold; /* Make active link bold */
+}
+
+/* Adding underline effect on hover */
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #ffeb3b;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+/* On hover, the underline expands */
+.navbar-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack navbar items vertically */
+    padding: 1rem;
   }
-  
-  .navbar .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    font-family: 'Segoe UI', sans-serif;
+
+  .navbar-links {
+    flex-direction: column; /* Stack links vertically */
+    gap: 1rem;
+    margin-top: 1rem;
   }
-  
-  .navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
+
+  .navbar-links a {
+    font-size: 1.2rem; /* Adjust font size for small screens */
   }
-  
-  .navbar ul li {
-    font-size: 1rem;
-    font-weight: 500;
-  }
-  
-  .navbar ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-  }
-  
-  .navbar ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
+}
