@@ -6,8 +6,14 @@ import "./BookCard.css";
 function BookCard({ book, isRemovable = false }) {
   const { addToReadingList, removeFromReadingList, readingList } = useBookContext();
 
-  const isInReadingList = readingList.some((item) => item.id === book.id);
-
+  // const isInReadingList = readingList.some((item) => item.id === book.id);
+let isInReadingList = false;
+   for (let i = 0; i < readingList.length; i++) {
+      if (readingList[i].id === book.id) {
+      isInReadingList = true;
+      break;
+    }
+}
   const handleAdd = () => {
     addToReadingList(book);
   };
