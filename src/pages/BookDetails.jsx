@@ -51,9 +51,9 @@ const BookDetails = () => {
   if (notFound || !book || !book.volumeInfo) {
     return (
       <div className="no-book">
-        <p>Click on "View Details" On any Book To View Details</p>
         <h2>Book Not Found</h2>
         <p>We couldn't find the book you are looking for.</p>
+        <p>Click on "View Details" On any Book To View Details</p>
         <Link to="/" className="back-home-link">← Back to Home</Link>
       </div>
     );
