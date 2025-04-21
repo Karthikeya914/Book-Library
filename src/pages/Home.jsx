@@ -5,10 +5,21 @@ import SearchBar from "../components/SearchBar";
 import "./Home.css";
 
 function Home() {
-  const { books, setBooks } = useBookContext(); // Accessing books and setter from context
-  const [suggestions, setSuggestions] = useState([]); // State to hold search suggestions
+  const { books, setBooks } = useBookContext();
+  const [suggestions, setSuggestions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Function for fetching books from Google Books API
+  // Load saved search query from localStorage on component mount
+  useEffect(() => {
+    const savedQuery = localStorage.getItem("bookSearchQuery") || "";
+    if (savedQuery) {
+      setSearchQuery(savedQuery);
+      fetchBooks(savedQuery);
+    } else {
+      fetchBooks();
+    }
+  }, []);
+
   const fetchBooks = async (query = "") => {
     try {
       const response = await fetch(
@@ -16,22 +27,20 @@ function Home() {
       );
       const data = await response.json();
       const items = data.items || [];
-      setBooks(items); // Update context state with fetched books 
+      setBooks(items);
 
-      // Extract and store book titles as suggestions for the search bar
+      // Update suggestions (titles only)
       const titles = items.map((item) => item.volumeInfo.title);
       setSuggestions(titles);
+      
+      // Save the search query to localStorage
+      localStorage.setItem("bookSearchQuery", query);
+      setSearchQuery(query);
     } catch (error) {
-      console.error("Error fetching books:", error); // Log any errors that occur during fetching
+      console.error("Error fetching books:", error);
     }
   };
 
-  // Fetch books when the component first mounts
-  useEffect(() => {
-    fetchBooks(); // Initial fetch with an empty query
-  }, []);
-
-  // Handles user search input from SearchBar component
   const handleSearch = (query) => {
     fetchBooks(query);
   };
@@ -39,11 +48,13 @@ function Home() {
   return (
     <div className="home">
       <h1 className="page-title">Search Books</h1>
-      {/* Search bar with live suggestions */}
-      <SearchBar onSearch={handleSearch} suggestions={suggestions} />
+      <SearchBar 
+        onSearch={handleSearch} 
+        suggestions={suggestions} 
+        initialValue={searchQuery} // Pass the initial value to SearchBar
+      />
 
       <div className="book-list">
-        {/* Render BookCard for each fetched book, or show fallback message */}
         {books && books.length > 0 ? (
           books.map((book) => <BookCard key={book.id} book={book} />)
         ) : (
